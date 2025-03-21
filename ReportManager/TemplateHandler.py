@@ -15,26 +15,7 @@ BODY = """<!DOCTYPE html>
         <style>
             #container {
                 display: grid;
-                height: 100vh;
-                width: 100vw;
-                overflow: hidden;
-            }
-
-            @media only screen and (orientation: portrait) {
-                #container {
-                    grid-template-columns: repeat(16, calc(100vh / 16));
-                }
-            }
-
-            @media only screen and (orientation: landscape) {
-                #container {
-                    grid-template-columns: repeat(16, 1fr);
-                }
-            }
-
-            .gridSquare {
-                aspect-ratio: 1 / 1;
-                background-color: black;
+                width: 30%;
             }
         </style>
     </head>
