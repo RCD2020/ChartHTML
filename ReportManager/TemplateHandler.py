@@ -56,7 +56,12 @@ class TemplateHandler:
         text = BODY
 
         text = insertSubstring(text, '{{title}}', self.title)
-        text = insertSubstring(text, '{{content}}', self.charts[0].html())
+
+        charttext = ''
+        for i in range(len(self.charts)):
+            charttext += self.charts[i].html(i)
+
+        text = insertSubstring(text, '{{content}}', charttext)
 
         return text
 

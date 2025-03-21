@@ -7,15 +7,15 @@ class Chart:
     def toSetup(self) -> str:
         return 'empty chart'
     
-    def toConfig(self) -> str:
+    def toConfig(self, id) -> str:
         return 'empty chart'
 
     
-    def html(self) -> str:
-        text  = '<canvas id="chart"></canvas>\n'
-        text += '<script>const ctx = document.getElementById("chart");\n\n'
-        text += 'const data = ' + self.toSetup() + ';\n\n'
-        text += 'new Chart(ctx, ' + self.toConfig() + ');</script>'
+    def html(self, id) -> str:
+        text  = f'<canvas id="chart{id}"></canvas>\n'
+        text += f'<script>const ctx{id} = document.getElementById("chart{id}");\n\n'
+        text += f'const data{id} = ' + self.toSetup() + ';\n\n'
+        text += f'new Chart(ctx{id}, ' + self.toConfig(id) + ');</script>'
 
         return text
 
@@ -55,9 +55,9 @@ class Scatterplot(Chart):
         return text
     
     
-    def toConfig(self):
+    def toConfig(self, id):
         text = (
-            '{ type:"scatter", data: data, options: { scales: {'
+            '{ type:"scatter", data: data' + f'{id}' + ', options: { scales: {'
             'x: { type: "linear", position: "bottom" }}}}'
         )
 
