@@ -1,4 +1,7 @@
 from ReportManager.Utilities.StringUtilities import insertSubstring
+from ReportManager.ChartManager import Chart
+
+from typing import List
 
 
 BODY = """<!DOCTYPE html>
@@ -37,21 +40,23 @@ BODY = """<!DOCTYPE html>
     </head>
 
     <body>
-        <div id="container">{{contents}}</div>
+        <div id="container">{{content}}</div>
     </body>
 </html>"""
 
 
 class TemplateHandler:
 
-    def __init__(self, title='ChartApp'):
+    def __init__(self, title='ChartApp', charts: List[Chart] = []):
         self.title = title
+        self.charts = charts
 
 
     def format_template(self):
         text = BODY
 
         text = insertSubstring(text, '{{title}}', self.title)
+        text = insertSubstring(text, '{{content}}', self.charts[0].html())
 
         return text
 
