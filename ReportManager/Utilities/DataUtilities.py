@@ -60,6 +60,6 @@ def random_csv(num_rows, path):
 
 
 if __name__ == '__main__':
-    # print(generate_date_time())
+    print(generate_date_time())
     # print(random_name())
-    random_csv(100, 'out.csv')
+    # random_csv(100, 'out.csv')
