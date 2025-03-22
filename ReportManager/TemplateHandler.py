@@ -15,7 +15,7 @@ BODY = """<!DOCTYPE html>
         <style>
             #container {
                 display: grid;
-                width: 30%;
+                /* width: 30%; */
             }
         </style>
     </head>
