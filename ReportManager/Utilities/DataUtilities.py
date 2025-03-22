@@ -35,7 +35,7 @@ def generate_date_time():
     day = randint(1, get_num_days_in_month(month, year))
     hour = randint(1, 12)
     minute = randint(0, 59)
-    mmmm = 'AM' if hour >= 6 else 'PM'
+    mmmm = 'AM' if hour >= 6 and hour <= 11 else 'PM'
 
     return (
         f'{day:02d} {MONTH_NAME[month-1]} {year} '
@@ -59,7 +59,11 @@ def random_csv(num_rows, path):
         f.write(text)
 
 
+def random_rgb():
+    return (randint(0, 255), randint(0, 255), randint(0,255))
+
+
 if __name__ == '__main__':
-    print(generate_date_time())
+    # print(generate_date_time())
     # print(random_name())
-    # random_csv(100, 'out.csv')
+    random_csv(2000, 'out.csv')

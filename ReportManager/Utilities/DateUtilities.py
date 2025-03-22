@@ -6,4 +6,4 @@ def read_date(date_str):
 
 
 if __name__ == '__main__':
-    read_date('22 March 2025 9:29 AM')
+    print(read_date('22 March 2025 9:29 AM'))

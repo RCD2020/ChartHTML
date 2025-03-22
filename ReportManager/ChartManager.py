@@ -1,5 +1,24 @@
 from typing import List, Tuple
 from random import randint
+from enum import Enum
+    
+
+class AxisFormat(Enum):
+    DATE = (
+        '{type: "time", time: {unit: "day", displayFormats: {day: "'
+        'yyyy-MM-dd"}}}'
+    )
+    TIME = (
+        '{type: "time", time: {unit: "hour", parser: "HH:mm", '
+        'displayFormats: {hour: "hh:mm aa"}}}'
+    )
+
+class TooltipCallbacks(Enum):
+    XY = (
+        'label: function(context) { let label = context.dataset.label '
+        '|| ""; if (label) {label += ": " + context.raw.x + " " + '
+        'context.raw.y; } return label; }'
+    )
 
 
 class Chart:
@@ -35,8 +54,17 @@ class ScatterplotDataset:
 
 class Scatterplot(Chart):
 
-    def __init__(self, data: List[ScatterplotDataset]):
+    def __init__(
+            self,
+            data: List[ScatterplotDataset],
+            x_format: AxisFormat = None,
+            y_format: AxisFormat = None,
+            tooltipCallbacks: List[TooltipCallbacks] = []
+        ):
         self.data = data
+        self.x_format = x_format
+        self.y_format = y_format
+        self.tooltipCallbacks = tooltipCallbacks
 
     
     def toSetup(self):
@@ -56,10 +84,29 @@ class Scatterplot(Chart):
     
     
     def toConfig(self, id):
-        text = (
-            '{ type:"scatter", data: data' + f'{id}' + ', options: { scales: {'
-            'x: { type: "linear", position: "bottom" }}}}'
-        )
+        text = '{ type:"scatter", data: data' + f'{id}' + ', options: {'
+
+        if self.x_format or self.y_format:
+            text += 'scales: {'
+
+            if self.x_format:
+                text += 'x: ' + self.x_format.value
+            if self.y_format:
+                if self.x_format:
+                    text += ', '
+                text += 'y: ' + self.y_format.value
+
+            text += '},'
+
+        if self.tooltipCallbacks:
+            text += 'plugins: { tooltip: { callbacks: {'
+
+            for x in self.tooltipCallbacks:
+                text += x.value + ','
+            
+            text += '}}},'
+
+        text += '}}'
 
         return text
     
